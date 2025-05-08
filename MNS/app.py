@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 from waitress import serve
 
@@ -22,4 +23,5 @@ def result(answer1, answer2):
         return render_template('result_2.html')  # Show Result 4
 
 if __name__ == "__main__":
-    serve(app, host='0.0.0.0', port=8080)  # Using waitress to serve the app
+    port = int(os.environ.get("PORT", 5000))  # Use the port from environment or default to 5000
+    app.run(host="0.0.0.0", port=port)
