@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space Explorer</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background: radial-gradient(ellipse at bottom, #0b0c2a 0%, #000000 100%);
+    }
+
+    #stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .content, .result {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 20px;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+
+    h2, h3 {
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+
+    button {
+      padding: 1rem 2rem;
+      margin: 1rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #1f1f2e;
+      color: white;
+      border: 1px solid #5a5aff;
+      box-shadow: 0 0 10px rgba(90, 90, 255, 0.6);
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background-color: #2d2d4d;
+      box-shadow: 0 0 20px rgba(90, 90, 255, 0.8);
+    }
+
+    .submit-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <!-- Quiz Section -->
+  <div class="content" id="quiz-section">
+    <h1>Beyond Earth: The Commercial Race to Space</h1>
+    <h2>Space Exploration Questions</h2>
+
+    <div class="question-container">
+      <h3>1. Should space agencies like NASA or private companies like SpaceX be the ones to lead asteroid mining, or should independent, non-profit organizations take charge?</h3>
+      <button onclick="selectAnswer('question1', 'yes')">Yes</button>
+      <button onclick="selectAnswer('question1', 'no')">No</button>
+    </div>
+
+    <div class="question-container">
+      <h3>2. Is asteroid mining the key to humanity’s future, or is it a dangerous venture that will lead to over-exploitation of our solar system?</h3>
+      <button onclick="selectAnswer('question2', 'yes')">Yes</button>
+      <button onclick="selectAnswer('question2', 'no')">No</button>
+    </div>
+
+    <button class="submit-button" onclick="showResult()">Submit</button>
+  </div>
+
+  <!-- Result Section -->
+  <div class="result hidden" id="result-section">
+    <h1 id="result-title"></h1>
+    <h2 id="result-subtitle"></h2>
+    <p id="result-paragraph1"></p>
+    <p id="result-paragraph2"></p>
+    <button onclick="restart()">Back to Start</button>
+  </div>
+
+  <script>
+    const answers = { question1: null, question2: null };
+
+    function selectAnswer(question, value) {
+      answers[question] = value;
+    }
+
+    function showResult() {
+      if (!answers.question1 || !answers.question2) {
+        alert('Please answer both questions!');
+        return;
+      }
+
+      const key = `${answers.question1}-${answers.question2}`;
+      const resultData = {
+        "yes-yes": {
+          title: "Result: Yes-Yes",
+          subtitle: "You believe asteroid mining should be led by NASA or SpaceX, and that it’s essential for our future.",
+          p1: "Asteroid mining is a revolutionary concept that could change how we access resources. Proponents argue it could unlock precious materials like platinum and water in space.",
+          p2: "Your view aligns with optimism about space as a new frontier. This could reduce Earth's burden and support colonizing Mars or beyond."
+        },
+        "yes-no": {
+          title: "Result: Yes-No",
+          subtitle: "You support space agencies leading asteroid mining but are cautious about its risks.",
+          p1: "While confident in organizations like NASA, you’re wary of how unchecked space exploitation might impact celestial environments.",
+          p2: "This balanced stance reflects concern about sustainability as humanity reaches beyond Earth."
+        },
+        "no-yes": {
+          title: "Result: No-Yes",
+          subtitle: "You believe non-profit organizations should lead, and asteroid mining is vital.",
+          p1: "You prioritize public interest over profit in pioneering space, while still seeing asteroid mining as key to humanity’s expansion.",
+          p2: "Your perspective highlights a thoughtful approach: ambitious but ethically grounded."
+        },
+        "no-no": {
+          title: "Result: No-No",
+          subtitle: "You prefer non-profit leadership and are skeptical of asteroid mining’s benefits.",
+          p1: "You’re concerned that mining space could echo the same exploitation issues we face on Earth.",
+          p2: "Your cautious view values ethical responsibility over rapid expansion."
+        }
+      };
+
+      const result = resultData[key];
+      document.getElementById('result-title').textContent = result.title;
+      document.getElementById('result-subtitle').textContent = result.subtitle;
+      document.getElementById('result-paragraph1').textContent = result.p1;
+      document.getElementById('result-paragraph2').textContent = result.p2;
+
+      document.getElementById('quiz-section').classList.add('hidden');
+      document.getElementById('result-section').classList.remove('hidden');
+    }
+
+    function restart() {
+      answers.question1 = null;
+      answers.question2 = null;
+      document.getElementById('quiz-section').classList.remove('hidden');
+      document.getElementById('result-section').classList.add('hidden');
+    }
+
+    // Starry background animation
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let w, h, stars = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function initStars(count = 150) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          radius: Math.random() * 1.5,
+          speed: Math.random() * 0.5 + 0.05
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "#fff";
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+        star.y += star.speed;
+        if (star.y > h) {
+          star.y = 0;
+          star.x = Math.random() * w;
+        }
+      }
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener("resize", () => {
+      resize();
+      initStars();
+    });
+
+    resize();
+    initStars();
+    drawStars();
+  </script>
+</body>
+</html>
