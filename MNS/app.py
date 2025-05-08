@@ -1,5 +1,7 @@
 from flask import Flask, render_template
+from waitress import serve
 
+# Create the Flask application
 app = Flask(__name__)
 
 # Main route for the index page
@@ -19,5 +21,5 @@ def result(answer1, answer2):
     elif answer1 == 'no' and answer2 == 'no':
         return render_template('result_2.html')  # Show Result 4
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+if __name__ == "__main__":
+    serve(app, host='0.0.0.0', port=8080)
