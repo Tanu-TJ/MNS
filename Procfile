@@ -1,1 +1,1 @@
-web: gunicorn MNS.app:app
+web: gunicorn app:app
