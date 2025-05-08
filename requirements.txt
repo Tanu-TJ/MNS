@@ -39,7 +39,7 @@ pygame==2.6.1
 
 # Utilities for concurrency and async operations
 celery==5.2.7
-gevent==22.10.0
+gevent==24.2.1
 
 # Cloud and APIs (Google, OpenAI, etc.)
 google-auth==2.39.0
