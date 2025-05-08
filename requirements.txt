@@ -1,9 +1,6 @@
 # Flask and related packages
 Flask==3.1.0
-Flask-SocketIO==5.5.1
-flask-cors==5.0.1
 gunicorn==23.0.0
-waitress==2.1.1  
 
 # Database and ORM (if needed for your project)
 SQLAlchemy==2.0.40
@@ -12,35 +9,12 @@ pymysql==1.0.2
 
 # General utilities
 requests==2.32.3
-pytz==2023.3.post1
 python-dotenv==1.1.0
 Werkzeug==3.1.3
-
-# Data science and ML (if applicable)
-numpy>=1.23.0
-pandas==2.1.4
-scipy==1.15.2
-matplotlib==3.8.2
-tensorflow==2.19.0
-keras==3.9.2
-
-# Frontend libraries and utilities (if applicable)
-Jinja2==3.1.6
-rich==14.0.0
 
 # Web and Networking
 aiohttp==3.11.18
 httpx==0.28.1
-pyttsx3==2.98
-
-# Speech and media libraries (if applicable)
-SpeechRecognition==3.14.2
-pydub==0.25.1
-pygame==2.6.1
-
-# Utilities for concurrency and async operations
-celery==5.2.7
-gevent==24.2.1
 
 # Cloud and APIs (Google, OpenAI, etc.)
 google-auth==2.39.0
@@ -50,5 +24,4 @@ openai==0.28.1
 # Optional packages for additional functionality
 pillow==11.0.0
 beautifulsoup4==4.13.4
-pytesseract==0.3.10
 pyyaml==6.0.2
