@@ -22,7 +22,6 @@ scipy==1.15.2
 matplotlib==3.8.2
 tensorflow==2.19.0
 keras==3.9.2
-scikit-learn==1.1.2
 
 # Frontend libraries and utilities (if applicable)
 Jinja2==3.1.6
