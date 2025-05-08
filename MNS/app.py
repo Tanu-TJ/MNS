@@ -22,4 +22,4 @@ def result(answer1, answer2):
         return render_template('result_2.html')  # Show Result 4
 
 if __name__ == "__main__":
-    serve(app, host='0.0.0.0', port=8080)
+    serve(app, host='0.0.0.0', port=8080)  # Using waitress to serve the app
