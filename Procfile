@@ -1,1 +1,1 @@
-gunicorn app:app
+gunicorn MNS.app:app
